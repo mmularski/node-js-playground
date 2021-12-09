@@ -1,0 +1,21 @@
+{
+  "name": "serverless_tut_7_rest_dynamodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "serverless-offline": "^8.2.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1031.0",
+    "uuid": "^8.3.2"
+  }
+}

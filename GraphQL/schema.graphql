@@ -1,0 +1,20 @@
+type Game {
+    name: String
+    platform: Platform
+    genre: Genre
+}
+
+type Platform {
+    name: String
+    games: [Game]
+}
+
+type Genre {
+    name: String
+    games: [Game]
+}
+
+type Query {
+    getGames: [Game]
+    getPlatforms: [Platform]
+}

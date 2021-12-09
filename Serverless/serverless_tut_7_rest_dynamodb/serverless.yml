@@ -1,0 +1,74 @@
+service: serverless-tut-7-rest-dynamodb
+
+frameworkVersion: "2"
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  region: eu-central-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:eu-central-1:*:table/dev-rest-t7"
+
+functions:
+  getAll:
+    handler: src/function.getAll
+    events:
+      - http:
+          path: products
+          method: GET
+
+  create:
+    handler: src/function.create
+    events:
+      - http:
+          path: products
+          method: POST
+
+  getById:
+    handler: src/function.getById
+    events:
+      - http:
+          path: products/{id}
+          method: GET
+
+  update:
+    handler: src/function.update
+    events:
+      - http:
+          path: products/{id}
+          method: PUT
+
+  delete:
+    handler: src/function.delete
+    events:
+      - http:
+          path: products/{id}
+          method: DELETE
+
+resources:
+  Resources:
+    DynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        TableName: dev-rest-t7

@@ -1,0 +1,35 @@
+@host = http://localhost:3000
+
+####
+# getAll - local
+GET {{host}}/dev/products
+
+
+####
+# create - local
+POST {{host}}/dev/products
+Content-Type: application/json
+
+{
+    "name": "sneakers",
+    "description": "sneaker shoes description"
+}
+
+####
+# getById - local
+GET {{host}}/dev/products/1
+
+
+####
+# update - local
+PUT {{host}}/dev/products/1
+Content-Type: application/json
+
+{
+    "name": "sneakers",
+    "description": "sneaker shoes new description"
+}
+
+####
+# delete - local
+DELETE  {{host}}/dev/products/1
