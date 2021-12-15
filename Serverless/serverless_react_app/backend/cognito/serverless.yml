@@ -27,7 +27,7 @@ resources:
           # Determines whether email addresses or phone numbers can be specified as user names 
           # when a user signs up. Possible values: phone_number or email.
           - email
-        VerificationMessageTemplate: # to powoduje ze jest  Verification type link
+        VerificationMessageTemplate:
           DefaultEmailOption: 'CONFIRM_WITH_LINK'
         MfaConfiguration: 'OFF'
         Policies:

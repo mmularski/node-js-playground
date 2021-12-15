@@ -4,9 +4,17 @@ import './index.css';
 import App from './App'; 
 import * as serviceWorker from './serviceWorker';
 import 'semantic-ui-css/semantic.min.css'
+import Amplify from 'aws-amplify';
+import config from './config'
 
-// TODO LEKCJA 09-05 Połączenie frontendu i backendu ze sobą
-
+Amplify.configure({
+    Auth: {
+        mandatorySignIn: true,
+        region: config.cognito.REGION,
+        userPoolId: config.cognito.USER_POOL_ID,
+        userPoolWebClientId: config.cognito.APP_CLIENT_ID
+    }
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

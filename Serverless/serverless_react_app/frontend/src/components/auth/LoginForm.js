@@ -4,17 +4,20 @@ import logo from '../../logo.png'
 import { Context } from "../../Store";
 import history from '../../history'
 
+import {Auth} from 'aws-amplify';
+
 const LoginForm = () => {
-  
-  // TODO LEKCJA 09-07. Logowanie użytkownika
   const handleSubmit = async () => {
     try {
-      // cognito code goes here
+      const loginResponse = await Auth.signIn(state.username, state.password);
+
+      console.log(loginResponse);
+
       console.log('dispatching event');
       dispatch({
         type: "login",
-        tokens: {},
-        attributes: {}
+        tokens: loginResponse.signInUserSession,
+        attributes: loginResponse.attributes
       })
       history.push('/welcome')
     } catch (error) {

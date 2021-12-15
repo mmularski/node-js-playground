@@ -3,12 +3,21 @@ import { Button, Form, Grid, Header, Image, Segment, Message } from 'semantic-ui
 import logo from '../../logo.png'
 import history from '../../history'
 
+import { Auth } from 'aws-amplify';
+
 const RegisterForm = () => {
-  // TODO LEKCJA 09-06. Rejestracja użytkownika
   const registerNewUser = async () => {
     try {
-      
-      // cognito code goes here
+
+      const signupResponse = await Auth.signUp({
+        username: state.email,
+        password: state.password1,
+        attributes: {
+          email: state.email,
+          given_name: state.firstname,
+          family_name: state.lastname
+        }
+      });
 
       history.push('/registered')
     } catch (error) {

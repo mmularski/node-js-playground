@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Auth } from "aws-amplify";
+
 export const getInitialState = () => {
   const localState = localStorage.getItem('state')
   if (localState) {
@@ -8,11 +10,14 @@ export const getInitialState = () => {
   return initialState
 }
 
-// TODO LEKCJA 09-08-2. Wylogowanie użytkownika
 const performLogout = () => {
   console.log('Logging out...');
   
-  // cognito code goes here
+  Auth.signOut().then(() => {
+    console.log('OK');
+  }).catch(error => {
+    console.log('ERR');
+  });
 
   localStorage.removeItem('state');
   return initialState;
@@ -30,6 +35,7 @@ export const reducer = (state, action) => {
       return performLogout()
     case "login":
       console.log('Logged in');
+
       const newState = {   
         isAuthenticated: true,
         isAuthenticating: false,
