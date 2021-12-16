@@ -1,0 +1,35 @@
+@host = http://localhost:3000
+
+#### 
+# getAll
+GET {{host}}/products
+
+
+#### 
+# create
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "itemName": "wiadro",
+    "itemDescription": "Można w nim trzymać wodę lub pliki"
+}
+
+
+#### 
+# getById
+GET {{host}}/products/jakiesId
+
+#### 
+# update
+PUT {{host}}/products/jakiesId
+Content-Type: application/json
+
+{
+    "itemName": "wiadro",
+    "itemDescription": "nowy lepszy opis wiadra :-)"
+}
+
+#### 
+# delete
+DELETE  {{host}}/products/jakiesId

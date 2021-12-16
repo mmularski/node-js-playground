@@ -1,4 +1,7 @@
-{
+{   
+    "api": {
+        "productsUrl": "https://cgn9ctq121.execute-api.eu-central-1.amazonaws.com/dev/products"
+    },
     "cognito": {
         "REGION": "eu-central-1",
         "USER_POOL_ID": "eu-central-1_4olhgkRV9",

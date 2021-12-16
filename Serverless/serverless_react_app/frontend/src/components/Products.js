@@ -6,40 +6,30 @@ import {
   Grid,
 } from 'semantic-ui-react'
 import ProductRow from './ProductRow'
+import axios from 'axios';
+
+const config = require('../config.json');
+
 export default function Products() {
 
-  const items = [
-    {
-      name: 'Maska głowy konia',
-      imageUrl: 'https://9.allegroimg.com/s512/035a09/8e8da63c4d228fe653e01a34ce09/Profesjonalna-lateksowa-maska-KON-glowa-konia',
-      category: 'Przedmiot',
-      description: 'W sam raz na imprezę'
-    },
-    {
-      name: 'Maska Anonymous',
-      imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/61xKb9BcWFL._UL1200_.jpg',
-      category: 'Przedmiot',
-      description: 'Na imprezę, obalanie rządu lub żądanie okupu.'
-    },
-    {
-      name: 'Łopata',
-      imageUrl: 'https://www.szafirek.net/383/%C5%82opata-szpadel-z-trzonkiem-drewnianym-szeroko%C5%9B%C4%87-20cm.jpg',
-      category: 'Przedmiot',
-      description: 'Można się okopać i w ten sposób zabezpieczyć'
-    },
-    {
-      name: 'Parawan plażowy',
-      imageUrl: 'https://s3.fifishop.pl/39820-large_default/parawan-plazowy-marynarski-sen.jpg',
-      category: 'Przedmiot',
-      description: 'Letni atrybut prawdziwego Polaka'
-    },
-    {
-      name: 'Wiadro',
-      imageUrl: 'https://thumbs.img-sprzedajemy.pl/1000x901c/3e/0c/81/stare-wiadro-skierniewice-455398088.jpg',
-      category: 'Przedmiot',
-      description: 'Idealne na trzymanie plików. Nie przecieka!'
-    },
-  ]
+  const [state, setState] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try{
+        console.log('Starting getting data...');
+        
+        const response = await axios.get(`${config.api.productsUrl}`);
+        const {metadata, data} = response.data;
+        console.log(`Fetched ${metadata.length} items`);
+
+        setState(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData()
+  }, []);
 
   const splitArray = array => {
     let i,j, temparray, chunk = 3;
@@ -64,7 +54,7 @@ export default function Products() {
       </Container>
 
       <Grid columns={3} divided>
-        {splitArray(items).map((e,index) => (<ProductRow items={e} key={index} />))}
+        {splitArray(state).map((e,index) => (<ProductRow items={e} key={index} />))}
       </Grid>
     </Container>
   )

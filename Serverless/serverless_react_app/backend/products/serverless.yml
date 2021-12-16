@@ -1,0 +1,114 @@
+service: products
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${self:custom.deployment.myRegion.${self:custom.deployment.myStage}}
+  profile: ${self:custom.deployment.myProfile.${self:custom.deployment.myStage}}
+  endpointType: REGIONAL # configuration for API Gateway
+  environment:
+    tableName: ${self:custom.tableName}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}"
+
+custom:
+  tableName: ${self:service}-${self:custom.deployment.myStage}
+  deployment: ${file(config/deployment.yml):deployment}
+
+functions:
+  getAllProducts:
+    handler: src/products/function.getAllProducts
+    events:
+      - http:
+          path: products
+          method: GET
+
+  createProduct:
+    handler: src/products/function.createProduct
+    events:
+      - http:
+          path: products
+          method: POST
+  
+  createComment:
+    handler: src/comments/function.createComment
+    events:
+      - http:
+          path: products/{id}
+          method: POST
+          cors: true
+
+  getProductById:
+    handler: src/products/function.getProductById
+    events:
+      - http:
+          path: products/{id}
+          method: GET
+
+  getCommentsByProductId:
+    handler: src/comments/function.getCommentsByProductId
+    events:
+      - http:
+          path: products/{id}/comments
+          method: GET
+
+  updateProduct:
+    handler: src/products/function.updateProduct
+    events:
+      - http:
+          path: products/{id}
+          method: PUT
+  
+  deleteProduct:
+    handler: src/products/function.deleteProduct
+    events:
+      - http:
+          path: products/{id}
+          method: DELETE
+
+resources:
+  Resources:
+    DynamoDbTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: pk # partition key
+            AttributeType: S
+          - AttributeName: sk # secondary key
+            AttributeType: S
+        KeySchema:            # primary key
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
+        TableName: ${self:custom.tableName}
+
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+    GatewayResponseDefault5XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'

@@ -1,0 +1,101 @@
+@host = https://.execute-api.eu-central-1.amazonaws.com/dev
+
+#### 
+# getAll
+GET {{host}}/products
+
+#### 
+# getById
+GET {{host}}/products/1c2fac4f-c02d-464c-a772-476a45ce2ae6
+
+#### 
+# create
+POST {{host}}/products
+Content-Type: application/json
+
+{
+  "name":"Maska głowy konia",
+  "imageUrl":"dddd",
+  "category":"Przedmiot",
+  "description":"W sam raz na imprezę"
+}
+
+
+
+
+
+#### 
+# update
+PUT {{host}}/products/60cc8029-4510-47ac-bb9b-e2aa3b0aabd5
+Content-Type: application/json
+
+{
+    "name": "wiadro",
+    "description": "nowy lepszy opis wiadra :-)"
+}
+
+#### 
+# delete
+DELETE  {{host}}/products/60cc8029-4510-47ac-bb9b-e2aa3b0aabd5
+
+
+
+
+#####################################################
+
+####
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name":"Maska głowy konia",
+    "imageUrl":"https://szkolenie-serverless-obrazki.s3.eu-central-1.amazonaws.com/kon.jpg",
+    "category":"Przedmiot",
+    "description":"W sam raz na imprezę"
+}
+
+####
+POST {{host}}/products
+Content-Type: application/json
+
+
+{
+    "name":"Maska Anonymous",
+    "imageUrl":"https://szkolenie-serverless-obrazki.s3.eu-central-1.amazonaws.com/maska.jpg",
+    "category":"Przedmiot",
+    "description":"Na imprezę, obalanie rządu lub żądanie okupu."
+}
+
+####
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name":"Łopata",
+    "imageUrl":"https://szkolenie-serverless-obrazki.s3.eu-central-1.amazonaws.com/lopata.jpg",
+    "category":"Przedmiot",
+    "description":"Można się okopać i w ten sposób zabezpieczyć"
+}
+  
+####
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name":"Parawan plażowy",
+    "imageUrl":"https://szkolenie-serverless-obrazki.s3.eu-central-1.amazonaws.com/parawan.jpg",
+    "category":"Przedmiot",
+    "description":"Letni atrybut prawdziwego Polaka"
+}
+  
+  
+####
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name":"Wiadro",
+    "imageUrl":"https://szkolenie-serverless-obrazki.s3.eu-central-1.amazonaws.com/wiadro.jpg",
+    "category":"Przedmiot",
+    "description":"Idealne na trzymanie plików. Nie przecieka!"
+}

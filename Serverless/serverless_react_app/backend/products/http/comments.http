@@ -1,0 +1,16 @@
+@host = https://.execute-api.eu-central-1.amazonaws.com/dev
+
+#### 
+# getCommentsByProductId
+GET {{host}}/products/1c2fac4f-c02d-464c-a772-476a45ce2ae6/comments
+
+#### 
+# create comment
+POST {{host}}/products/1c2fac4f-c02d-464c-a772-476a45ce2ae6
+Content-Type: application/json
+
+{
+  "text":"Komentarz",
+  "username": "user-id",
+  "userlabel": "Pawel Z"
+}
