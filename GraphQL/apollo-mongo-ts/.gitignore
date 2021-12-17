@@ -1,2 +1,3 @@
 dev/docker
 node_modules/
+dist/

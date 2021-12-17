@@ -2,7 +2,7 @@ import PostModel from "@models/Post.model";
 import PostInterface from "@models/Post.interface";
 
 type QueryIdArgsType = {
-  id: String
+  id: string
 }
 
 type CreatePostType = {
@@ -10,7 +10,7 @@ type CreatePostType = {
 }
 
 type UpdatePostType = {
-  id: String,
+  id: string,
   post: PostInterface
 }
 
@@ -22,12 +22,12 @@ const resolvers = {
     getAllPosts: async () => {
       return await PostModel.find();
     },
-    getPost: async (_: any, { id }: QueryIdArgsType, __: any, ___: any) => {
+    getPost: async (_: any, { id }: QueryIdArgsType, __: any, ___: any) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       return await PostModel.findById(id);
     }
   },
   Mutation: {
-    createPost: async (parent: any, args: CreatePostType, context: any, info: any) => {
+    createPost: async (parent: any, args: CreatePostType, context: any, info: any) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       const { title, description } = args.post;
 
       const post = new PostModel({ title, description });
@@ -36,12 +36,12 @@ const resolvers = {
 
       return post;
     },
-    deletePost: async (_: any, { id }: QueryIdArgsType, __: any, ___: any) => {
+    deletePost: async (_: any, { id }: QueryIdArgsType, __: any, ___: any) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       await PostModel.findByIdAndDelete(id);
 
       return true;
     },
-    updatePost: async (_: any, args: UpdatePostType, __: any, ___: any) => {
+    updatePost: async (_: any, args: UpdatePostType, __: any, ___: any) => { // eslint-disable-line @typescript-eslint/no-unused-vars
       const { id } = args;
       const { title, description } = args.post;
 
